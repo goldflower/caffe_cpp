@@ -1,6 +1,6 @@
 # Caffe utilities
 
-Some examples for personal usage, it's not for general purpose but it's easy to modified.
+Some examples for personal usage, it's not for general purpose but it's easy to be modified.
 
 Just put them into caffe/tools and build them.
 
