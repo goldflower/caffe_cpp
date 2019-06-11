@@ -1,0 +1,86 @@
+name: "fc"
+layer{
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label" 
+  include{
+    phase: TRAIN
+  }
+  data_param{
+    source: "lmdb_database"
+    batch_size: 64
+    backend: LMDB
+  }
+}
+layer{
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include{
+    phase: TEST
+  }
+  data_param{
+    source: "test_lmdb_database"
+    batch_size: 500
+    backend: LMDB
+  }
+}
+layer{
+  name: "fc1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "fc1"
+  inner_product_param{
+    num_output: 84
+    weight_filler{
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler{
+      type: "constant"
+      value: 0.01
+    }
+  }
+}
+layer{
+  name: "relu1"
+  type: "ReLU"
+  bottom: "fc1"
+  top: "fc1"
+}
+layer{
+  name: "out"
+  type: "InnerProduct"
+  bottom: "fc1"
+  top: "out"
+  inner_product_param{
+    num_output: 1
+    weight_filler{
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler{
+      type: "constant"
+      value: 0.01
+    }
+  }
+}
+layer{
+  name: "loss"
+  type: "SigmoidCrossEntropyLoss"
+  top: "loss"
+  bottom: "out"
+  bottom: "label"
+}
+layer{
+  name: "accuracy"
+  type: "Accuracy"
+  top: "accuracy"
+  bottom: "out"
+  bottom: "label"
+  include{
+    phase: TEST
+  }
+}

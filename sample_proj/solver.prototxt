@@ -1,0 +1,13 @@
+net: "train_val.prototxt"
+test_iter: 20
+test_interval: 500
+base_lr: 0.001
+momentum: 0.9
+momentum2: 0.999
+lr_policy: "fixed"
+display: 100
+max_iter: 5000
+snapshot: 5000
+snapshot_prefix: "checkpoints/ckpt"
+type: "Adam"
+solver_mode: CPU
